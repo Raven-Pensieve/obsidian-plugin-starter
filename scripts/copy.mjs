@@ -83,6 +83,20 @@ if (path.resolve(pluginDir) === path.resolve(distDir)) {
 
 if (fs.existsSync(pluginDir)) {
 	try {
+		// 如果目标路径是一个已存在的目录，优先把其中的 data.json 复制回 dist
+		const stats = fs.lstatSync(pluginDir);
+		if (stats.isDirectory()) {
+			const dataJsonPath = path.join(pluginDir, 'data.json');
+			if (fs.existsSync(dataJsonPath)) {
+				const distDataJsonPath = path.join(distDir, 'data.json');
+				try {
+					fs.copyFileSync(dataJsonPath, distDataJsonPath);
+				} catch (err) {
+					console.error(`⚠ 备份 data.json 到 dist 失败: ${err.message}`);
+				}
+			}
+		}
+
 		fs.rmSync(pluginDir, { recursive: true, force: true });
 	} catch (err) {
 		console.error(`❌ 处理目标路径时出错: ${err.message}`);
@@ -106,4 +120,3 @@ try {
 	console.error(`❌ 复制失败: ${err.message}`);
 	process.exit(1);
 }
-
