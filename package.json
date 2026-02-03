@@ -4,8 +4,8 @@
 	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
 	"main": "main.js",
 	"scripts": {
-		"dev": "node scripts/esbuild.config.mjs",
-		"build": "tsc -noEmit -skipLibCheck && node scripts/esbuild.config.mjs production",
+		"dev": "node scripts/link.mjs && node scripts/esbuild.config.mjs",
+		"build": "tsc -noEmit -skipLibCheck && node scripts/esbuild.config.mjs production && node scripts/copy.mjs",
 		"build:local": "tsc -noEmit -skipLibCheck && node scripts/esbuild.config.mjs production keep-console && node scripts/copy-to-vault.mjs",
 		"version": "pnpm run build && node scripts/version-bump.mjs && pnpm run changelog:u && pnpm i",
 		"changelog:u": "conventional-changelog -p angular -i CHANGELOG.md -s -u -n ./scripts/changelog-option.js",

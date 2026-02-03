@@ -5,7 +5,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const projectRoot = join(__dirname, "..");
+const distDir = join(__dirname, "..", "dist");
 
 dotenv.config({ quiet: true });
 const VAULT_PATH = process.env.VAULT_PATH;
@@ -18,15 +18,15 @@ if (!VAULT_PATH) {
 const fileConfig = [
 	{
 		name: "manifest.json",
-		sourcePath: projectRoot,
+		sourcePath: distDir,
 	},
 	{
 		name: "main.js",
-		sourcePath: projectRoot,
+		sourcePath: distDir,
 	},
 	{
 		name: "styles.css",
-		sourcePath: projectRoot,
+		sourcePath: distDir,
 	},
 ];
 
