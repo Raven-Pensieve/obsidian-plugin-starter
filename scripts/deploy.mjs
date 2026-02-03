@@ -12,6 +12,7 @@ const projectRoot = path.resolve(__dirname, "..");
 const distDir = path.join(projectRoot, "dist");
 const manifestPath = path.join(projectRoot, "manifest.json");
 const envPath = path.join(projectRoot, ".env");
+const backupDir = path.join(projectRoot, ".backup");
 
 // ==================== 参数解析 ====================
 const args = process.argv.slice(2);
@@ -99,6 +100,21 @@ function ensureDistReady() {
 }
 
 /**
+ * 备份 data.json 到独立备份目录
+ */
+function backupDataJson(targetPluginDir) {
+	const dataJsonPath = path.join(targetPluginDir, "data.json");
+	if (fs.existsSync(dataJsonPath)) {
+		fs.mkdirSync(backupDir, { recursive: true });
+		const backupPath = path.join(backupDir, "data.json");
+		fs.copyFileSync(dataJsonPath, backupPath);
+		log.info("已备份 data.json 到 .backup/");
+		return true;
+	}
+	return false;
+}
+
+/**
  * 递归复制目录
  */
 function copyDirRecursive(src, dest) {
@@ -153,13 +169,8 @@ async function deployLink(vaultPath, pluginId) {
 				return;
 			}
 		} else if (stats.isDirectory()) {
-			// 备份 data.json
-			const dataJsonPath = path.join(targetPluginDir, "data.json");
-			if (fs.existsSync(dataJsonPath)) {
-				const backupPath = path.join(distDir, "data.json");
-				fs.copyFileSync(dataJsonPath, backupPath);
-				log.info("已备份 data.json 到 dist/");
-			}
+			// 备份 data.json 到独立备份目录
+			backupDataJson(targetPluginDir);
 		}
 
 		// 删除旧的路径
@@ -174,6 +185,14 @@ async function deployLink(vaultPath, pluginId) {
 		const linkType = process.platform === "win32" ? "junction" : "dir";
 		fs.symlinkSync(distDir, targetPluginDir, linkType);
 		log.success(`软链接已创建: dist → ${pluginId}`);
+		
+		// 自动从备份恢复 data.json 到 dist/
+		const backupPath = path.join(backupDir, "data.json");
+		if (fs.existsSync(backupPath)) {
+			const distDataJsonPath = path.join(distDir, "data.json");
+			fs.copyFileSync(backupPath, distDataJsonPath);
+			log.success("已从 .backup/ 恢复 data.json 到 dist/");
+		}
 	} catch (error) {
 		log.error(`创建软链接失败: ${error.message}`);
 		process.exit(1);
@@ -182,7 +201,7 @@ async function deployLink(vaultPath, pluginId) {
 
 /**
  * 模式2: copy - 完整复制（生产构建）
- * 复制整个 dist 目录
+ * 复制整个 dist 目录，保护用户的 data.json
  */
 async function deployCopy(vaultPath, pluginId) {
 	const targetPluginDir = path.join(
@@ -204,6 +223,25 @@ async function deployCopy(vaultPath, pluginId) {
 		process.exit(1);
 	}
 
+	// 保护 data.json：双重保护机制
+	// 1. 内存临时保存（用于立即恢复）
+	// 2. 备份到 .backup/ （用于意外情况恢复）
+	let dataJsonContent = null;
+	const dataJsonPath = path.join(targetPluginDir, "data.json");
+	if (fs.existsSync(dataJsonPath)) {
+		try {
+			dataJsonContent = fs.readFileSync(dataJsonPath, "utf8");
+			log.info("已保存现有的 data.json");
+			
+			// 同时备份到 .backup/ 作为安全保障
+			fs.mkdirSync(backupDir, { recursive: true });
+			fs.writeFileSync(path.join(backupDir, "data.json"), dataJsonContent);
+			log.info("已备份到 .backup/data.json");
+		} catch (error) {
+			log.warn(`读取 data.json 失败: ${error.message}`);
+		}
+	}
+
 	// 删除旧的目标目录
 	if (fs.existsSync(targetPluginDir)) {
 		fs.rmSync(targetPluginDir, { recursive: true, force: true });
@@ -217,6 +255,19 @@ async function deployCopy(vaultPath, pluginId) {
 	} catch (error) {
 		log.error(`复制失败: ${error.message}`);
 		process.exit(1);
+	}
+
+	// 恢复 data.json
+	if (dataJsonContent) {
+		try {
+			fs.writeFileSync(
+				path.join(targetPluginDir, "data.json"),
+				dataJsonContent,
+			);
+			log.success("已恢复 data.json");
+		} catch (error) {
+			log.error(`恢复 data.json 失败: ${error.message}`);
+		}
 	}
 }
 
