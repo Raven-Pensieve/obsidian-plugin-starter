@@ -1,4 +1,4 @@
-// import "@styles/styles";
+import "@styles/styles";
 import { App, Editor, MarkdownView, Modal, Notice, Plugin } from "obsidian";
 import { PluginSettingTab } from "./settings/PluginSettingTab";
 import SettingsStore from "./settings/SettingsStore";
@@ -17,8 +17,8 @@ export default class CPlugin extends Plugin {
 			"Sample Plugin",
 			(evt: MouseEvent) => {
 				// Called when the user clicks the icon.
-				new Notice("This is a notice!");
-			}
+				new Notice(this.settings.dev);
+			},
 		);
 		// Perform additional things with the ribbon
 		ribbonIconEl.addClass("my-plugin-ribbon-class");
@@ -76,7 +76,7 @@ export default class CPlugin extends Plugin {
 
 		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
 		this.registerInterval(
-			window.setInterval(() => console.log("setInterval"), 5 * 60 * 1000)
+			window.setInterval(() => console.log("setInterval"), 5 * 60 * 1000),
 		);
 	}
 
