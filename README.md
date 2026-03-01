@@ -7,12 +7,7 @@ This is a sample plugin for Obsidian (https://obsidian.md).
 This project uses Typescript to provide type checking and documentation.
 The repo depends on the latest plugin API (obsidian.d.ts) in Typescript Definition format, which contains TSDoc comments describing what it does.
 
-[![GitHub stars](https://img.shields.io/github/stars/Raven-Pensieve/obsidian-plugin-starter?style=flat&label=Stars)](https://github.com/Raven-Pensieve/obsidian-plugin-starter/stargazers)
-[![Total Downloads](https://img.shields.io/github/downloads/Raven-Pensieve/obsidian-plugin-starter/total?style=flat&label=Total%20Downloads)](https://github.com/Raven-Pensieve/obsidian-plugin-starter/releases)
-[![Latest Downloads](https://img.shields.io/github/downloads/Raven-Pensieve/obsidian-plugin-starter/latest/total?style=flat&label=Latest%20Downloads)](https://github.com/Raven-Pensieve/obsidian-plugin-starter/releases/latest)
-[![GitHub License](https://img.shields.io/github/license/Raven-Pensieve/obsidian-plugin-starter?style=flat&label=License)](https://github.com/Raven-Pensieve/obsidian-plugin-starter/blob/master/LICENSE)
-[![GitHub Issues](https://img.shields.io/github/issues/Raven-Pensieve/obsidian-plugin-starter?style=flat&label=Issues)](https://github.com/Raven-Pensieve/obsidian-plugin-starter/issues)
-[![GitHub Last Commit](https://img.shields.io/github/last-commit/Raven-Pensieve/obsidian-plugin-starter?style=flat&label=Last%20Commit)](https://github.com/Raven-Pensieve/obsidian-plugin-starter/commits/master)
+![GitHub Socialify](https://socialify.git.ci/Raven-Pensieve/obsidian-plugin-starter/image?description=1&font=Rokkitt&forks=1&issues=1&language=1&name=1&owner=1&pattern=Floating+Cogs&pulls=1&stargazers=1&theme=Auto)
 
 ## Installation
 
