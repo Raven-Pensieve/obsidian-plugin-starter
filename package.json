@@ -14,8 +14,7 @@
 		"i18n:typesafe": "typesafe-i18n",
 		"i18n:sync": "node scripts/sync-i18n.mjs",
 		"test": "jest",
-		"test:watch": "jest --watch",
-		"link:data": "node scripts/link-data.mjs"
+		"test:watch": "jest --watch"
 	},
 	"keywords": [
 		"Obsidian Plugin"
