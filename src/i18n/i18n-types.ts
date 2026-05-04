@@ -3,7 +3,7 @@
 import type { BaseTranslation as BaseTranslationType, LocalizedString } from 'typesafe-i18n'
 
 export type BaseTranslation = BaseTranslationType
-export type BaseLocale = 'zh'
+export type BaseLocale = 'en'
 
 export type Locales =
 	| 'en'
@@ -16,14 +16,14 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * O​b​s​i​d​i​a​n​ ​插​件​入​门
+	 * O​b​s​i​d​i​a​n​ ​p​l​u​g​i​n​ ​s​t​a​r​t​e​r
 	 */
 	'obsidian-plugin-starter': string
 }
 
 export type TranslationFunctions = {
 	/**
-	 * Obsidian 插件入门
+	 * Obsidian plugin starter
 	 */
 	'obsidian-plugin-starter': () => LocalizedString
 }
