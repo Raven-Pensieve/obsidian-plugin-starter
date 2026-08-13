@@ -31,3 +31,8 @@ Thumbs.db
 .env
 dist
 .backup/
+dev
+
+# ai
+.workbuddy-ai
+.zcode
