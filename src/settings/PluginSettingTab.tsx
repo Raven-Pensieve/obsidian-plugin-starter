@@ -7,6 +7,7 @@ import { Settings } from "./Settings";
 
 export class PluginSettingTab extends ObPluginSettingTab {
 	plugin: CPlugin;
+	root: ReturnType<typeof createRoot>;
 	icon: string = "settings";
 
 	constructor(plugin: CPlugin) {

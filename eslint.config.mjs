@@ -1,9 +1,9 @@
 import eslint from "@eslint/js";
 import obsidianmd from "eslint-plugin-obsidianmd";
 import { defineConfig, globalIgnores } from "eslint/config";
-import globals from "globals";
 import tseslint from "typescript-eslint";
 
+// Obsidian 注入到全局作用域的辅助函数/对象
 const obsidianGlobals = {
 	createEl: "readonly",
 	createDiv: "readonly",
@@ -14,15 +14,29 @@ const obsidianGlobals = {
 	activeWindow: "readonly",
 };
 
+// Jest 注入到测试文件的全局变量
+// 浏览器/DOM 全局变量（document、window 等）由
+// obsidianmd.configs.recommended 提供，无需在此重复声明
+const testGlobals = {
+	describe: "readonly",
+	it: "readonly",
+	test: "readonly",
+	expect: "readonly",
+	jest: "readonly",
+	beforeAll: "readonly",
+	beforeEach: "readonly",
+	afterAll: "readonly",
+	afterEach: "readonly",
+};
+
 export default defineConfig([
 	eslint.configs.recommended,
 	...tseslint.configs.recommended,
 	{
 		languageOptions: {
 			globals: {
-				...globals.browser,
 				...obsidianGlobals,
-				...globals.mocha,
+				...testGlobals,
 				React: "readonly",
 			},
 			parserOptions: {
