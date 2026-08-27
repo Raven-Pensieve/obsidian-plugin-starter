@@ -34,7 +34,7 @@ export function reactSetting(
 			}
 
 			host.empty();
-			host.addClass("rht-react-host");
+			host.addClass("ops-react-host");
 
 			const root = createRoot(host);
 			roots.set(host, root);

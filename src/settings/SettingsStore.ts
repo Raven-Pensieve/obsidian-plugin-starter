@@ -22,7 +22,10 @@ export default class SettingsStore {
 	}
 
 	get store() {
-		return Object.assign({}, this.#store);
+		// 必须返回稳定引用：useSyncExternalStore 用 subscribe 的引用相等性判断是否
+		// 需要退订重订。若每次访问都返回新对象（旧写法 Object.assign({}, …)），
+		// 组件每次渲染都会退订再重订，白白抖动。
+		return this.#store;
 	}
 
 	get plugin() {

@@ -2,7 +2,7 @@
 	"id": "obsidian-plugin-starter",
 	"name": "Obsidian Plugin Starter",
 	"version": "1.0.0",
-	"minAppVersion": "1.11.0",
+	"minAppVersion": "1.13.0",
 	"description": "Demonstrates some of the capabilities of the Obsidian API.",
 	"author": "RavenHogWarts",
 	"authorUrl": "https://github.com/Raven-Pensieve",

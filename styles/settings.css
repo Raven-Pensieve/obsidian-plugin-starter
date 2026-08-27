@@ -1,0 +1,96 @@
+/*
+ * 设置页 React 孤岛（TagListEditor）样式。
+ *
+ * 全部使用 Obsidian 内置 CSS 变量（--size-*、--background-*、--text-* 等），
+ * 因此自动跟随用户当前主题的明/暗与配色，无需自定义调色板。
+ * 类名统一以 ops-（obsidian-plugin-starter）为前缀，避免与其他插件冲突。
+ */
+
+/* 宿主行：让 React 孤岛占满整行设置宽度（reactSetting 桥接会加此类）。 */
+.ops-react-host {
+	display: block;
+	width: 100%;
+	padding: 0;
+	border-top: none;
+}
+
+.ops-tags {
+	display: flex;
+	flex-direction: column;
+	gap: var(--size-4-2);
+}
+
+.ops-tags-head {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: var(--size-4-2);
+}
+
+.ops-tags-desc {
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+}
+
+.ops-tags-count {
+	flex-shrink: 0;
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+}
+
+.ops-tags-input {
+	width: 100%;
+}
+
+.ops-tags-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--size-2-2);
+}
+
+.ops-tag {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--size-2-2);
+	padding: var(--size-2-1) var(--size-2-3);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-s);
+	background: var(--background-secondary);
+	font-size: var(--font-ui-smaller);
+}
+
+.ops-tag-remove {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+	background: transparent;
+	box-shadow: none;
+	color: var(--text-muted);
+	cursor: pointer;
+	height: auto;
+}
+
+.ops-tag-remove:hover {
+	color: var(--text-error);
+}
+
+.ops-tag-remove .ops-icon svg {
+	width: var(--icon-xs);
+	height: var(--icon-xs);
+}
+
+.ops-tags-empty {
+	padding: var(--size-4-2) 0;
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+}
+
+.ops-icon {
+	display: inline-flex;
+}
+
+.ops-icon svg {
+	width: var(--icon-s);
+	height: var(--icon-s);
+}

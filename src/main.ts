@@ -17,7 +17,7 @@ export default class CPlugin extends Plugin {
 			"Sample Plugin",
 			(evt: MouseEvent) => {
 				// Called when the user clicks the icon.
-				new Notice(this.settings.dev);
+				new Notice(this.settings.general.greeting);
 			},
 		);
 		// Perform additional things with the ribbon
